@@ -10,6 +10,9 @@ import NotFound from "./Pages/NotFound.jsx";
 import AuthProvider from "./Context/AuthProvider.jsx";
 import Login from "./Pages/Login.jsx";
 import Register from "./Pages/Register.jsx";
+import FindPartners from "./Pages/FindPartners.jsx";
+import CreateProfile from "./Pages/CreateProfile.jsx";
+import MyConnections from "./Pages/MyConnections.jsx";
 
 const router = createBrowserRouter([
   {
@@ -21,6 +24,18 @@ const router = createBrowserRouter([
         index: true,
         path: "/",
         element: <Home></Home>,
+      },
+      {
+        path: "/find-partners",
+        element: <FindPartners></FindPartners>,
+      },
+      {
+        path: "/create-profile",
+        element: <CreateProfile></CreateProfile>,
+      },
+      {
+        path: "/my-connections",
+        element: <MyConnections></MyConnections>,
       },
       {
         path: "/login",

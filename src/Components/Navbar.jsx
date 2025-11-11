@@ -1,10 +1,27 @@
 import React, { use, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
   const { user, logout } = use(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Sign-out successful.",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   return (
     <nav className="navbar bg-base-100 shadow-sm px-4 md:px-8 py-3">
@@ -41,7 +58,7 @@ const Navbar = () => {
               My Connections
             </Link>
             <button
-              onClick={logout}
+              onClick={handleLogout}
               className="btn btn-sm btn-primary text-white"
             >
               Logout
@@ -121,7 +138,7 @@ const Navbar = () => {
               </li>
               <li>
                 <button
-                  onClick={logout}
+                  onClick={handleLogout}
                   className="btn btn-primary w-full text-white font-bold"
                 >
                   Logout
