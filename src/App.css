@@ -1,0 +1,18 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+/* Dark theme with amber accents */
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: true;
+
+  --color-primary: #f59e0b; /* Eye-catching amber for buttons and links */
+  --color-secondary: #fbbf24; /* Lighter amber for secondary elements */
+  --color-accent: #fcd34d; /* Subtle accent yellow */
+  --color-neutral: #1e293b; /* Dark gray background */
+  --color-base-100: #0f172a; /* Almost black base */
+  --color-info: #3b82f6; /* Info messages (blue) */
+  --color-success: #10b981; /* Success messages (green) */
+  --color-warning: #fbbf24; /* Warnings (amber) */
+  --color-error: #ef4444; /* Error messages (red) */
+}
