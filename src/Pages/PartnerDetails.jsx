@@ -42,11 +42,13 @@ const PartnerDetails = () => {
     setSendingRequest(true);
     try {
       // Increment partnerCount
-      await axios.patch(`http://localhost:3000/sendRequest/${id}`);
+      await axios.patch(
+        `https://study-partner-server.vercel.app/sendRequest/${id}`
+      );
       setPartner((prev) => ({ ...prev, partnerCount: prev.partnerCount + 1 }));
 
       // Save request in requests collection
-      await axios.post("http://localhost:3000/requests", {
+      await axios.post("https://study-partner-server.vercel.app/requests", {
         partnerId: id,
         partnerName: partner.name,
         partnerImage: partner.profileImage,
@@ -75,9 +77,7 @@ const PartnerDetails = () => {
   return (
     <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <img
-        src={
-          partner.profileImage || "https://i.ibb.co/358cJ6cF/download-6.webp"
-        }
+        src={partner.profileImage || "https://i.ibb.co/4ZK4KF1D/OIP-10.webp"}
         alt={partner.name}
         className="w-40 h-40 rounded-full mx-auto object-cover "
       />

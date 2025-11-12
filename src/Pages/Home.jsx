@@ -6,6 +6,7 @@ import { Link } from "react-router";
 import Testimonials from "../Components/Testimonials";
 import HeroSlider from "../Components/HeroSlider";
 import FunStats from "../Components/FunStats";
+import HowItWorks from "../Components/HowItWorks";
 
 const Home = () => {
   const [partners, setPartners] = useState([]);
@@ -74,6 +75,9 @@ const Home = () => {
                     {partner.name}
                   </h3>
                   <p className="text-gray-600 mt-1">📘 {partner.subject}</p>
+                  <p className="text-gray-600 mt-1">
+                    Experience: {partner.experienceLevel} years
+                  </p>
                   <p className="text-yellow-500 font-medium mt-1">
                     ⭐ Rating: {partner.rating || 0}
                   </p>
@@ -93,7 +97,7 @@ const Home = () => {
           )}
         </div>
       </div>
-
+      <HowItWorks></HowItWorks>
       <Testimonials></Testimonials>
     </div>
   );

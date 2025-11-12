@@ -16,3 +16,21 @@
   --color-warning: #fbbf24; /* Warnings (amber) */
   --color-error: #ef4444; /* Error messages (red) */
 }
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.8s ease-in-out both;
+}
+
+.animate-bounce-slow {
+  animation: bounce 2s infinite;
+}
