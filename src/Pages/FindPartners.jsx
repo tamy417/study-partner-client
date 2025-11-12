@@ -141,9 +141,7 @@ const FindPartners = () => {
               className="border border-gray-300 rounded px-3 py-2 text-black w-64"
             />
             <button
-              onClick={() => {
-                // re-trigger effect (state already changed) — kept for explicit UX
-              }}
+              onClick={() => {}}
               className="bg-black text-white px-4 py-2 rounded hover:bg-gray-800"
             >
               Search

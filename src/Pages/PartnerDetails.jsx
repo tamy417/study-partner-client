@@ -70,7 +70,9 @@ const PartnerDetails = () => {
         alt={partner.name}
         className="w-48 h-48 object-cover rounded-full mx-auto"
       />
-      <h1 className="text-3xl font-bold text-center mt-4">{partner.name}</h1>
+      <h1 className="text-3xl font-bold text-center mt-4 text-blue-400">
+        {partner.name}
+      </h1>
       <p className="text-gray-600 text-center mt-1">📘 {partner.subject}</p>
       <p className="text-gray-600 text-center mt-1">
         Mode: {partner.studyMode}
