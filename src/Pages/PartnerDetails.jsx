@@ -86,16 +86,16 @@ const PartnerDetails = () => {
       <p className="text-center text-gray-700 mt-1">
         Mode: {partner.studyMode}
       </p>
-      <p className="text-center text-gray-600 mt-1">
+      <p className="text-center text-gray-700 mt-1">
         Availability: {partner.availabilityTime || "Not specified"}
       </p>
-      <p className="text-center text-gray-600 mt-1">
+      <p className="text-center text-gray-700 mt-1">
         Location: {partner.location || "Not specified"}
       </p>
-      <p className="text-center text-gray-600 mt-1">
+      <p className="text-center text-gray-700 mt-1">
         Experience: {partner.experienceLevel || "Not specified"}
       </p>
-      <p className="text-center text-yellow-600 font-semibold mt-1">
+      <p className="text-center text-yellow-700 font-semibold mt-1">
         Rating: {partner.rating || 0}
       </p>
       <p className="text-center text-gray-800 mt-1">
