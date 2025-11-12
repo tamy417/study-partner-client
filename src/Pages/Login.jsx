@@ -1,16 +1,17 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginPage = () => {
   const { signInUser, googleSignIn, loading, setLoading } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
-  console.log(navigate);
   const from = location.state?.from?.pathname || "/";
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -24,7 +25,6 @@ const LoginPage = () => {
         navigate(from, { replace: true });
         setLoading(false);
       })
-
       .catch((error) => {
         toast.error(error.message);
       });
@@ -62,17 +62,26 @@ const LoginPage = () => {
               className="w-full border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-900"
             />
           </div>
-          <div>
+
+          <div className="relative">
             <label className="block text-gray-700 font-medium mb-1">
               Password
             </label>
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               name="password"
               required
-              className="w-full border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-900"
+              className="w-full border border-gray-300 px-4 py-2 rounded focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-900 pr-10"
             />
+            <button
+              type="button"
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-9 text-gray-600 hover:text-blue-600"
+            >
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
+            </button>
           </div>
+
           <button
             type="submit"
             disabled={loading}
@@ -80,6 +89,7 @@ const LoginPage = () => {
           >
             {loading ? "Logging in..." : "Login"}
           </button>
+          <p className=" text-gray-600">Forget Password?</p>
         </form>
 
         <div className="mt-4 text-center text-gray-600">
