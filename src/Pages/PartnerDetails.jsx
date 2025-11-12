@@ -1,60 +1,69 @@
-import React, { use, useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router";
 import axios from "axios";
 import { toast, ToastContainer } from "react-toastify";
-import { AuthContext } from "../context/AuthContext";
+import "react-toastify/dist/ReactToastify.css";
+import { AuthContext } from "../Context/AuthContext";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
 const PartnerDetails = () => {
   const { id } = useParams();
-  const { user, loading, setLoading } = use(AuthContext);
   const navigate = useNavigate();
+  const { user, loading: authLoading } = useContext(AuthContext);
 
   const [partner, setPartner] = useState(null);
+  const [loading, setLoading] = useState(true);
   const [sendingRequest, setSendingRequest] = useState(false);
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
+    const fetchPartner = async () => {
+      try {
+        const res = await axios.get(`http://localhost:3000/partners/${id}`);
+        setPartner(res.data);
+      } catch (err) {
+        console.error(err);
+        toast.error("Failed to load partner details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchPartner();
+  }, [id]);
 
-    axios
-      .get(`http://localhost:3000/partners/${id}`)
-      .then((res) => setPartner(res.data))
-      .catch(() => toast.error("Failed to load partner details."))
-      .finally(() => setLoading(false));
-  }, [id, user, navigate, setLoading]);
-
-  const handleSendRequest = () => {
+  const handleSendRequest = async () => {
     if (!user) {
-      toast.error("You must be logged in to send a request.");
+      toast.error("You must be logged in to send a request!");
+      navigate("/login", { state: { from: `/partner/${id}` } });
       return;
     }
 
     setSendingRequest(true);
+    try {
+      // Increment partnerCount
+      await axios.patch(`http://localhost:3000/sendRequest/${id}`);
+      setPartner((prev) => ({ ...prev, partnerCount: prev.partnerCount + 1 }));
 
-    axios
-      .patch(`http://localhost:3000/sendRequest/${id}`)
-      .then(() => {
-        toast.success("Partner request sent successfully!");
-        setPartner((prev) => ({
-          ...prev,
-          partnerCount: prev.partnerCount + 1,
-        }));
+      // Save request in requests collection
+      await axios.post("http://localhost:3000/requests", {
+        partnerId: id,
+        partnerName: partner.name,
+        partnerImage: partner.profileImage,
+        subject: partner.subject,
+        studyMode: partner.studyMode,
+        userEmail: user.email,
+        createdAt: new Date(),
+      });
 
-        return axios.post("http://localhost:3000/partnerRequests", {
-          partnerId: partner._id,
-          partnerName: partner.name,
-          partnerEmail: partner.email,
-          requesterEmail: user.email,
-          createdAt: new Date(),
-        });
-      })
-      .catch(() => toast.error("Failed to send partner request."))
-      .finally(() => setSendingRequest(false));
+      toast.success("Partner request sent successfully!");
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong!");
+    } finally {
+      setSendingRequest(false);
+    }
   };
 
-  if (loading) return <LoadingSpinner />;
+  if (loading || authLoading) return <LoadingSpinner />;
 
   if (!partner)
     return (
@@ -62,34 +71,34 @@ const PartnerDetails = () => {
     );
 
   return (
-    <div className="max-w-4xl mx-auto py-10 px-4 bg-white rounded-lg shadow-md">
+    <div className="max-w-2xl mx-auto p-6 bg-white rounded-lg shadow-md">
       <img
         src={
           partner.profileImage || "https://i.ibb.co/358cJ6cF/download-6.webp"
         }
         alt={partner.name}
-        className="w-48 h-48 object-cover rounded-full mx-auto"
+        className="w-40 h-40 rounded-full mx-auto object-cover"
       />
-      <h1 className="text-3xl font-bold text-center mt-4 text-blue-400">
-        {partner.name}
-      </h1>
-      <p className="text-gray-600 text-center mt-1">📘 {partner.subject}</p>
-      <p className="text-gray-600 text-center mt-1">
+      <h1 className="text-3xl font-bold text-center mt-4">{partner.name}</h1>
+      <p className="text-center text-gray-600 mt-1">
+        📘 Subject: {partner.subject}
+      </p>
+      <p className="text-center text-gray-600 mt-1">
         Mode: {partner.studyMode}
       </p>
-      <p className="text-gray-600 text-center mt-1">
-        Availability: {partner.availabilityTime}
+      <p className="text-center text-gray-600 mt-1">
+        Availability: {partner.availabilityTime || "Not specified"}
       </p>
-      <p className="text-gray-600 text-center mt-1">
-        Location: {partner.location}
+      <p className="text-center text-gray-600 mt-1">
+        Location: {partner.location || "Not specified"}
       </p>
-      <p className="text-gray-600 text-center mt-1">
-        Experience: {partner.experienceLevel}
+      <p className="text-center text-gray-600 mt-1">
+        Experience: {partner.experienceLevel || "Not specified"}
       </p>
-      <p className="text-yellow-600 text-center mt-1 font-semibold">
+      <p className="text-center text-yellow-600 font-semibold mt-1">
         Rating: {partner.rating || 0}
       </p>
-      <p className="text-gray-800 text-center mt-1">
+      <p className="text-center text-gray-800 mt-1">
         Partner Requests: {partner.partnerCount || 0}
       </p>
 
@@ -100,7 +109,8 @@ const PartnerDetails = () => {
       >
         {sendingRequest ? "Sending Request..." : "Send Partner Request"}
       </button>
-      <ToastContainer></ToastContainer>
+
+      <ToastContainer />
     </div>
   );
 };
