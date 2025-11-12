@@ -6,12 +6,11 @@ import { AuthContext } from "./AuthContext";
 const PrivateRoute = ({ children }) => {
   const { user, loading } = useContext(AuthContext);
   const location = useLocation();
-  console.log(location);
 
   if (loading) return <LoadingSpinner />;
 
   if (!user) {
-    return <Navigate to="/login" state={{ from: location.pathname }} replace />;
+    return <Navigate to="/login" state={{ from: location }} replace />;
   }
 
   return children;

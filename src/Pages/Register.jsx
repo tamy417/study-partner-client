@@ -1,5 +1,5 @@
 import React from "react";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { AuthContext } from "../context/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router";
@@ -8,6 +8,7 @@ const Register = () => {
   const { createUser, googleSignIn, loading } = React.useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleRegister = (e) => {
     e.preventDefault();
@@ -32,7 +33,8 @@ const Register = () => {
     createUser(email, password)
       .then(() => {
         toast.success("Registration successful!");
-        navigate(location.state);
+        navigate(from, { replace: true });
+        e.target.reset();
       })
       .catch((error) => {
         toast.error(error.message);
@@ -43,7 +45,7 @@ const Register = () => {
     googleSignIn()
       .then(() => {
         toast.success("Google registration successful!");
-        navigate(location.state);
+        navigate(from, { replace: true });
       })
       .catch((error) => {
         toast.error(error.message);
@@ -157,7 +159,6 @@ const Register = () => {
           </button>
         </div>
       </div>
-      <ToastContainer></ToastContainer>
     </div>
   );
 };

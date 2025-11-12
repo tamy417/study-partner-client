@@ -5,9 +5,11 @@ import { AuthContext } from "../context/AuthContext";
 import { Link, useLocation, useNavigate } from "react-router";
 
 const LoginPage = () => {
-  const { signInUser, googleSignIn, loading } = useContext(AuthContext);
+  const { signInUser, googleSignIn, loading, setLoading } =
+    useContext(AuthContext);
   const navigate = useNavigate();
   const location = useLocation();
+  console.log(navigate);
   const from = location.state?.from?.pathname || "/";
 
   const handleLogin = async (e) => {
@@ -20,6 +22,7 @@ const LoginPage = () => {
       .then(() => {
         toast.success("Login successful!");
         navigate(from, { replace: true });
+        setLoading(false);
       })
 
       .catch((error) => {
