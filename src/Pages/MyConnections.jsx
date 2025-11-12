@@ -21,7 +21,7 @@ const MyConnections = () => {
     if (!user) return;
     try {
       const res = await axios.get(
-        `http://localhost:3000/requests?email=${user.email}`
+        `https://study-partner-server.vercel.app/requests?email=${user.email}`
       );
       setRequests(res.data);
     } catch (err) {

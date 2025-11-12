@@ -1,12 +1,14 @@
-import React, { use, useState } from "react";
+import React, { use, useState, useContext } from "react";
 import { AuthContext } from "../context/AuthContext";
+import { ThemeContext } from "../context/ThemeContext";
 import { Link, NavLink } from "react-router";
 import Swal from "sweetalert2";
 import logo from "../assets/OIP (5).webp";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaSun, FaMoon } from "react-icons/fa";
 
 const Navbar = () => {
-  const { user, logout } = use(AuthContext);
+  const { user, logout } = useContext(AuthContext);
+  const { theme, toggleTheme } = useContext(ThemeContext);
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -113,6 +115,15 @@ const Navbar = () => {
             </NavLink>
           </>
         )}
+
+        {/* 🌗 Theme Toggle */}
+        <button
+          onClick={toggleTheme}
+          className="btn btn-ghost btn-circle text-xl"
+          aria-label="Toggle Theme"
+        >
+          {theme === "dark" ? <FaSun /> : <FaMoon />}
+        </button>
       </div>
 
       {/* Mobile Menu Button */}
@@ -198,6 +209,24 @@ const Navbar = () => {
               </li>
             </>
           )}
+
+          {/* 🌗 Theme Toggle (Mobile) */}
+          <li>
+            <button
+              onClick={toggleTheme}
+              className="btn btn-outline w-full flex items-center justify-center"
+            >
+              {theme === "dark" ? (
+                <>
+                  <FaSun className="mr-2" /> Light Mode
+                </>
+              ) : (
+                <>
+                  <FaMoon className="mr-2" /> Dark Mode
+                </>
+              )}
+            </button>
+          </li>
         </ul>
       )}
     </nav>

@@ -16,6 +16,7 @@ import MyConnections from "./Pages/MyConnections.jsx";
 import Profile from "./Pages/Profile.jsx";
 import PartnerDetails from "./Pages/PartnerDetails.jsx";
 import PrivateRoute from "./Context/PrivateRoute.jsx";
+import ThemeProvider from "./Context/ThemeContext.jsx";
 
 const router = createBrowserRouter([
   {
@@ -75,7 +76,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router}></RouterProvider>
+      <ThemeProvider>
+        <RouterProvider router={router}></RouterProvider>
+      </ThemeProvider>
     </AuthProvider>
   </StrictMode>
 );
