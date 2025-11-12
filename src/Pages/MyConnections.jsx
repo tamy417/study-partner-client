@@ -16,7 +16,7 @@ const MyConnections = () => {
     studyMode: "",
   });
 
-  // Fetch all requests for the logged-in user
+  // Fetch requests
   const fetchRequests = async () => {
     if (!user) return;
     try {
@@ -26,7 +26,7 @@ const MyConnections = () => {
       setRequests(res.data);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to load your connections.");
+      toast.error("Failed to load connections.");
     } finally {
       setLoading(false);
     }
@@ -53,7 +53,7 @@ const MyConnections = () => {
     }
   };
 
-  // Start update process
+  // Start updating
   const handleStartUpdate = (req) => {
     setUpdatingId(req._id);
     setUpdateForm({
@@ -63,7 +63,7 @@ const MyConnections = () => {
     });
   };
 
-  // Handle form input changes
+  // Handle input change
   const handleChange = (e) => {
     setUpdateForm({ ...updateForm, [e.target.name]: e.target.value });
   };
@@ -90,44 +90,44 @@ const MyConnections = () => {
   if (loading || authLoading) return <LoadingSpinner />;
 
   return (
-    <div className="max-w-5xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <h2 className="text-2xl font-bold mb-6">My Connections</h2>
+    <div className="max-w-6xl mx-auto p-6 bg-gray-50 rounded-lg shadow-lg">
+      <h2 className="text-3xl font-bold mb-6 text-gray-900">My Connections</h2>
 
       {requests.length === 0 ? (
-        <p className="text-center text-gray-600">No connections found.</p>
+        <p className="text-center text-gray-700">No connections found.</p>
       ) : (
-        <table className="w-full table-auto border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="border p-2">Partner</th>
-              <th className="border p-2">Subject</th>
-              <th className="border p-2">Mode</th>
-              <th className="border p-2">Actions</th>
+        <table className="w-full border border-gray-300 bg-white">
+          <thead className="bg-gray-200">
+            <tr>
+              <th className="border p-3 text-left text-gray-900">Partner</th>
+              <th className="border p-3 text-gray-900">Subject</th>
+              <th className="border p-3 text-gray-900">Mode</th>
+              <th className="border p-3 text-gray-900">Actions</th>
             </tr>
           </thead>
           <tbody>
             {requests.map((req) => (
-              <tr key={req._id}>
-                <td className="border p-2 flex items-center gap-2">
+              <tr key={req._id} className="hover:bg-gray-100">
+                <td className="border p-3 flex items-center gap-3 text-gray-900">
                   <img
                     src={req.partnerImage}
                     alt={req.partnerName}
-                    className="w-10 h-10 rounded-full"
+                    className="w-12 h-12 rounded-full border border-gray-300"
                   />
                   {req.partnerName}
                 </td>
-                <td className="border p-2">{req.subject}</td>
-                <td className="border p-2">{req.studyMode}</td>
-                <td className="border p-2 flex gap-2">
+                <td className="border p-3 text-gray-900">{req.subject}</td>
+                <td className="border p-3 text-gray-900">{req.studyMode}</td>
+                <td className="border p-3 flex gap-2">
                   <button
                     onClick={() => handleStartUpdate(req)}
-                    className="bg-yellow-500 text-white px-2 py-1 rounded"
+                    className="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600 transition"
                   >
                     Update
                   </button>
                   <button
                     onClick={() => handleDelete(req._id)}
-                    className="bg-red-600 text-white px-2 py-1 rounded"
+                    className="bg-red-600 text-white px-3 py-1 rounded hover:bg-red-700 transition"
                   >
                     Delete
                   </button>
@@ -138,47 +138,50 @@ const MyConnections = () => {
         </table>
       )}
 
-      {/* Update Form Modal */}
+      {/* Update Modal */}
       {updatingId && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
           <form
             onSubmit={handleUpdate}
-            className="bg-white p-6 rounded-lg shadow-md w-96"
+            className="bg-white p-6 rounded-lg shadow-lg w-96 text-gray-900"
           >
-            <h3 className="text-xl font-bold mb-4">Update Request</h3>
-            <div className="mb-2">
-              <label className="block text-gray-700 font-medium">
+            <h3 className="text-2xl font-bold mb-4 text-gray-900">
+              Update Request
+            </h3>
+            <div className="mb-3">
+              <label className="block text-gray-900 font-medium">
                 Partner Name
               </label>
               <input
                 type="text"
                 name="partnerName"
                 value={updateForm.partnerName}
+                readOnly
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 required
               />
             </div>
-            <div className="mb-2">
-              <label className="block text-gray-700 font-medium">Subject</label>
+            <div className="mb-3">
+              <label className="block text-gray-900 font-medium">Subject</label>
               <input
                 type="text"
                 name="subject"
                 value={updateForm.subject}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 required
               />
             </div>
-            <div className="mb-2">
-              <label className="block text-gray-700 font-medium">
+            <div className="mb-3">
+              <label className="block text-gray-900 font-medium">
                 Study Mode
               </label>
               <select
                 name="studyMode"
                 value={updateForm.studyMode}
                 onChange={handleChange}
-                className="w-full border px-3 py-2 rounded"
+                className="w-full border px-3 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
                 required
               >
                 <option value="Online">Online</option>
@@ -187,17 +190,17 @@ const MyConnections = () => {
               </select>
             </div>
 
-            <div className="flex justify-end gap-2 mt-4">
+            <div className="flex justify-end gap-3 mt-4">
               <button
                 type="button"
                 onClick={() => setUpdatingId(null)}
-                className="px-4 py-2 rounded border"
+                className="px-4 py-2 rounded border hover:bg-gray-100 transition"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 rounded bg-blue-600 text-white"
+                className="px-4 py-2 rounded bg-blue-600 text-white hover:bg-blue-700 transition"
               >
                 Save
               </button>

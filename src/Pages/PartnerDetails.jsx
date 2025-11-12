@@ -77,9 +77,11 @@ const PartnerDetails = () => {
           partner.profileImage || "https://i.ibb.co/358cJ6cF/download-6.webp"
         }
         alt={partner.name}
-        className="w-40 h-40 rounded-full mx-auto object-cover"
+        className="w-40 h-40 rounded-full mx-auto object-cover "
       />
-      <h1 className="text-3xl font-bold text-center mt-4">{partner.name}</h1>
+      <h1 className="text-3xl font-bold text-center mt-4 text-blue-500">
+        {partner.name}
+      </h1>
       <p className="text-center text-gray-700 mt-1">
         📘 Subject: {partner.subject}
       </p>
