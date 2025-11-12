@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
@@ -19,27 +18,30 @@ const AuthProvider = ({ children }) => {
   const googleProvider = new GoogleAuthProvider();
 
   const createUser = (email, password) => {
+    setLoading(true);
     return createUserWithEmailAndPassword(auth, email, password);
   };
 
   const signInUser = (email, password) => {
+    setLoading(true);
     return signInWithEmailAndPassword(auth, email, password);
   };
 
   const googleSignIn = () => {
+    setLoading(true);
     return signInWithPopup(auth, googleProvider);
   };
 
   const logout = () => {
+    setLoading(true);
     return signOut(auth);
   };
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setTimeout(() => {
-        setUser(currentUser);
-        setLoading(false);
-      }, 1500);
+      console.log("User state changed:", currentUser);
+      setUser(currentUser);
+      setLoading(false);
     });
 
     return () => unsubscribe();
@@ -54,8 +56,9 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
   };
+
   if (loading) {
-    return <LoadingSpinner></LoadingSpinner>;
+    return <LoadingSpinner />;
   }
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
