@@ -13,6 +13,9 @@ import Register from "./Pages/Register.jsx";
 import FindPartners from "./Pages/FindPartners.jsx";
 import CreateProfile from "./Pages/CreateProfile.jsx";
 import MyConnections from "./Pages/MyConnections.jsx";
+import Profile from "./Pages/Profile.jsx";
+import PartnerDetails from "./Pages/PartnerDetails.jsx";
+import PrivateRoute from "./Context/PrivateRoute.jsx";
 
 const router = createBrowserRouter([
   {
@@ -31,11 +34,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/create-profile",
-        element: <CreateProfile></CreateProfile>,
+        element: (
+          <PrivateRoute>
+            <CreateProfile></CreateProfile>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/my-connections",
-        element: <MyConnections></MyConnections>,
+        element: (
+          <PrivateRoute>
+            <MyConnections></MyConnections>
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/partner/:id",
+        element: (
+          <PrivateRoute>
+            <PartnerDetails></PartnerDetails>
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
@@ -44,6 +63,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/profile",
+        element: <Profile></Profile>,
       },
     ],
   },

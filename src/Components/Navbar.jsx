@@ -1,17 +1,20 @@
 import React, { use, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { Link } from "react-router";
+import { Link, NavLink } from "react-router";
 import Swal from "sweetalert2";
+import logo from "../assets/OIP (5).webp";
+import { FaUser } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logout } = use(AuthContext);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const handleLogout = () => {
     logout()
       .then(() => {
         Swal.fire({
-          position: "top-end",
+          position: "center",
           icon: "success",
           title: "Sign-out successful.",
           showConfirmButton: false,
@@ -24,60 +27,90 @@ const Navbar = () => {
   };
 
   return (
-    <nav className="navbar bg-base-100 shadow-sm px-4 md:px-8 py-3">
-      {/* Logo */}
+    <nav className="navbar bg-base-100 shadow-sm px-4 md:px-8 py-3 relative z-50">
+      <img
+        src={logo}
+        alt="StudyMate Logo"
+        className="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md object-cover"
+      />
+
       <div className="flex-1">
-        <Link to="/" className="text-xl font-semibold text-primary">
+        <NavLink to="/" className="text-xl font-semibold text-primary">
           StudyMate
-        </Link>
+        </NavLink>
       </div>
 
       {/* Desktop Menu */}
       <div className="hidden md:flex items-center space-x-4">
-        <Link to="/" className="text-base-content hover:text-primary">
+        <NavLink to="/" className="text-base-content hover:text-primary">
           Home
-        </Link>
-        <Link
+        </NavLink>
+        <NavLink
           to="/find-partners"
           className="text-base-content hover:text-primary"
         >
           Find Partners
-        </Link>
+        </NavLink>
+
         {user ? (
           <>
-            <Link
+            <NavLink
               to="/create-profile"
               className="text-base-content hover:text-primary"
             >
               Create Profile
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/my-connections"
               className="text-base-content hover:text-primary"
             >
               My Connections
-            </Link>
-            <button
-              onClick={handleLogout}
-              className="btn btn-sm btn-primary text-white"
-            >
-              Logout
-            </button>
+            </NavLink>
+
+            {/* Profile Photo with Dropdown */}
+            <div className="relative z-50">
+              <img
+                src={user?.photoURL || <FaUser />}
+                alt="User"
+                className="w-10 h-10 rounded-full border-2 border-blue-400 cursor-pointer hover:scale-105 transition"
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+              />
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg border w-40 text-gray-700">
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 hover:bg-blue-50"
+                    onClick={() => setDropdownOpen(false)}
+                  >
+                    Profile
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setDropdownOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 hover:bg-blue-50"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
           </>
         ) : (
           <>
-            <Link
+            <NavLink
               to="/login"
               className="btn btn-sm btn-secondary text-white font-bold"
             >
               Login
-            </Link>
-            <Link
+            </NavLink>
+            <NavLink
               to="/register"
               className="btn btn-sm btn-neutral text-white font-bold"
             >
               Register
-            </Link>
+            </NavLink>
           </>
         )}
       </div>
@@ -107,7 +140,7 @@ const Navbar = () => {
 
       {/* Mobile Dropdown */}
       {menuOpen && (
-        <ul className="menu menu-compact absolute top-16 right-4 bg-base-100 rounded-box shadow-lg p-4 space-y-2 md:hidden">
+        <ul className="menu menu-compact absolute top-16 right-4 bg-base-100 rounded-box shadow-lg p-4 space-y-2 md:hidden z-50">
           <li>
             <Link to="/" className="hover:text-primary">
               Home

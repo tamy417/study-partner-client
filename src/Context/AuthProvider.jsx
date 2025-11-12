@@ -10,6 +10,7 @@ import {
 } from "firebase/auth";
 import { auth } from "../firebase/firebase.config";
 import { AuthContext } from "./AuthContext";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
@@ -35,8 +36,10 @@ const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-      setUser(currentUser);
-      setLoading(false);
+      setTimeout(() => {
+        setUser(currentUser);
+        setLoading(false);
+      }, 1500);
     });
 
     return () => unsubscribe();
@@ -51,6 +54,9 @@ const AuthProvider = ({ children }) => {
     loading,
     setLoading,
   };
+  if (loading) {
+    return <LoadingSpinner></LoadingSpinner>;
+  }
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };
