@@ -30,7 +30,7 @@ const slides = [
   {
     title: "Track Your Progress",
     desc: "Keep a count of your study connections and enhance your skills.",
-    bg: "bg-gradient-to-r from-yellow-400 to-orange-400",
+    bg: "bg-gradient-to-r from-beige-400 to-amber-200",
     icon: (
       <FaBook className="text-6xl md:text-8xl animate-pulse text-white/30 absolute top-1/3 right-1/4" />
     ),
@@ -39,7 +39,7 @@ const slides = [
   {
     title: "Boost Your Knowledge",
     desc: "Explore new subjects and expand your learning horizons.",
-    bg: "bg-gradient-to-r from-purple-500 to-pink-500",
+    bg: "bg-gradient-to-r from-purple-500 to-green-200",
     icon: (
       <FaLightbulb className="text-6xl md:text-8xl animate-bounce text-white/20 absolute top-1/4 left-1/3" />
     ),
@@ -48,7 +48,7 @@ const slides = [
   {
     title: "Learn Modern Skills",
     desc: "Access coding, tech, and other modern subjects with peers.",
-    bg: "bg-gradient-to-r from-green-400 to-lime-500",
+    bg: "bg-gradient-to-r from-green-400 to-lime-200",
     icon: (
       <FaLaptopCode className="text-6xl md:text-8xl animate-spin-slow text-white/30 absolute bottom-1/4 right-1/3" />
     ),
