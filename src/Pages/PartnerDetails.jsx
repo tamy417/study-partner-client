@@ -67,7 +67,7 @@ const PartnerDetails = () => {
 
   if (!partner)
     return (
-      <p className="text-center mt-10 text-gray-600">Partner not found.</p>
+      <p className="text-center mt-10 text-gray-700">Partner not found.</p>
     );
 
   return (
@@ -80,10 +80,10 @@ const PartnerDetails = () => {
         className="w-40 h-40 rounded-full mx-auto object-cover"
       />
       <h1 className="text-3xl font-bold text-center mt-4">{partner.name}</h1>
-      <p className="text-center text-gray-600 mt-1">
+      <p className="text-center text-gray-700 mt-1">
         📘 Subject: {partner.subject}
       </p>
-      <p className="text-center text-gray-600 mt-1">
+      <p className="text-center text-gray-700 mt-1">
         Mode: {partner.studyMode}
       </p>
       <p className="text-center text-gray-600 mt-1">
