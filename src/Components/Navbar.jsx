@@ -30,14 +30,16 @@ const Navbar = () => {
 
   return (
     <nav className="navbar bg-base-100 shadow-sm px-4 md:px-8 py-3 relative z-50">
-      <img
-        src={logo}
-        alt="StudyMate Logo"
-        className="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md object-cover"
-      />
+      <NavLink to="/">
+        <img
+          src={logo}
+          alt="StudyMate Logo"
+          className="w-12 h-12 rounded-full border-2 border-blue-500 shadow-md object-cover"
+        />
+      </NavLink>
 
       <div className="flex-1">
-        <NavLink to="/" className="text-xl font-semibold text-primary">
+        <NavLink to="/" className="text-xl font-semibold text-primary ml-2">
           StudyMate
         </NavLink>
       </div>
