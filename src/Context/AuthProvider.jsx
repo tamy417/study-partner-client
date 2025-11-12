@@ -57,9 +57,9 @@ const AuthProvider = ({ children }) => {
     setLoading,
   };
 
-  if (loading) {
-    return <LoadingSpinner />;
-  }
+  // if (loading) {
+  //   return <LoadingSpinner />;
+  // }
 
   return <AuthContext value={authInfo}>{children}</AuthContext>;
 };

@@ -12,6 +12,7 @@ const LoginPage = () => {
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -21,12 +22,42 @@ const LoginPage = () => {
 
     signInUser(email, password)
       .then(() => {
+        setError("");
         toast.success("Login successful!");
-        navigate(from, { replace: true });
-        setLoading(false);
+        setTimeout(() => {
+          navigate(from, { replace: true });
+          setLoading(false);
+        }, 1500);
       })
+
       .catch((error) => {
-        toast.error(error.message);
+        console.error("Firebase login error:", error);
+
+        let message = "Login failed. Please try again.";
+        switch (error.code) {
+          case "auth/invalid-credential":
+          case "auth/invalid-login-credentials":
+            message = "Invalid email or password.";
+            break;
+          case "auth/user-not-found":
+            message = "No user found with this email.";
+            break;
+          case "auth/wrong-password":
+            message = "Incorrect password.";
+            break;
+          case "auth/invalid-email":
+            message = "Invalid email format.";
+            break;
+          default:
+            message = error.message || "Something went wrong.";
+        }
+
+        setError(message);
+        toast.error(message);
+
+        setTimeout(() => {
+          setLoading(false);
+        }, 2000);
       });
   };
 
@@ -81,7 +112,11 @@ const LoginPage = () => {
               {showPassword ? <FaEye /> : <FaEyeSlash />}
             </button>
           </div>
-
+          {error && (
+            <p className="text-red-500 text-sm font-medium text-center">
+              {error}
+            </p>
+          )}
           <button
             type="submit"
             disabled={loading}
@@ -108,7 +143,7 @@ const LoginPage = () => {
           </button>
         </div>
       </div>
-      <ToastContainer />
+      <ToastContainer position="top-center" autoClose={3000} />
     </div>
   );
 };
