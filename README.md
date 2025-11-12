@@ -1,16 +1,43 @@
-# React + Vite
+🧠 StudyMate — Find Your Perfect Study Partner
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Live Site URL: https://study-partner-client.netlify.app/
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📖 Overview
 
-## React Compiler
+StudyMate is a MERN Stack web platform that helps students connect with ideal study partners based on their subjects, preferences, and goals. It transforms studying into a more collaborative, engaging, and effective experience through smart matching, CRUD functionality, and secure authentication.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+✨ Key Features
 
-## Expanding the ESLint configuration
+🔐 Secure Authentication:
+Firebase login and Google Sign-In ensure safe and easy access for users.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+👩‍🎓 Create & Manage Study Profiles:
+Logged-in users can create, view, update, and delete their study partner profiles with detailed info like subject, mode, and experience level.
+
+🔍 Search & Filter Functionality:
+Quickly find study partners by subject and sort by experience level for better matching.
+
+🤝 Partner Request System:
+Send partner requests, automatically increase connection counts, and manage all your connections on the My Connections page.
+
+🌗 Dark/Light Theme Toggle:
+Switch themes effortlessly for comfortable browsing in any environment.
+
+⚡ Dynamic Private Routes:
+Ensures only authenticated users can access profile-related pages, redirecting unauthenticated users to the login page.
+
+📊 Real-time MongoDB Updates:
+All CRUD operations (Create, Read, Update, Delete) are synced instantly with your database using Axios and Express.
+
+🧩 Tech Stack
+
+Frontend: React.js, Tailwind CSS, DaisyUI
+
+Backend: Node.js, Express.js
+
+Database: MongoDB
+
+Authentication: Firebase Authentication
+
+Hosting: Netlify (Client) & Vercel (Server)
